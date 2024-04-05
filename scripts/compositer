@@ -1,3 +1,4 @@
 #!/bin/bash
 
-picom --config ~/dotfiles/dwmsetup/configs/picom.conf
+#picom --config ~/dwmsetup/configs/picom.conf
+picom
