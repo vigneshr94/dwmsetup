@@ -20,7 +20,7 @@ decorations = "Buttonless"
 startup_mode = "Maximized"
 opacity = 0.8
 blur = true
-dynamic_title = true
+dynamic_title = false
 
 [scrolling]
 history = 10000
