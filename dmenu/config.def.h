@@ -6,15 +6,17 @@ static int topbar = 1;                      /* -b  option; if 0, dmenu appears a
 static const char *fonts[] = {
 	"FiraCode Nerd Font Mono:size=12"
 };
-static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
+static const char *prompt      = ":)->";      /* -p  option; prompt to the left of input field */
+
 static const char *colors[SchemeLast][2] = {
 	/*     fg         bg       */
-	[SchemeNorm] = { "#bbbbbb", "#222222" },
-	[SchemeSel] = { "#eeeeee", "#005577" },
-	[SchemeOut] = { "#000000", "#00ffff" },
+	[SchemeNorm] = { "#cdd6f4", "#1e1e2e" },
+	[SchemeSel] = { "#1e1e2e", "#89dceb" },
+	[SchemeOut] = { "#000000", "#89dceb" },
 };
+
 /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
-static unsigned int lines      = 0;
+static unsigned int lines      = 3;
 
 /*
  * Characters not considered part of a word while deleting words
