@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+datetime() {
+    time="$(date +'%a %d %b %I:%M%p')"
+    echo $time
+}
+
+cpu() {
+    cpu="$[100-$(vmstat 1 2|tail -1|awk '{print $15}')]"
+    echo $cpu
+}
+
+while : ; do
+    xsetroot -name "| CPU: $(cpu)% | $(datetime)"
+    sleep 1
+done

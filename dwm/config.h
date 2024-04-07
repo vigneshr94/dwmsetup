@@ -23,6 +23,7 @@ static const char *colors[][3]      = {
 static const char *const autostart[] = {
 	"compositer", NULL,
 	"fehbg", NULL,
+	"dwm-bar", NULL,
 	NULL /* terminate */
 };
 
