@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 datetime() {
     time="$(date +'%a %d %b %I:%M%p')"
     echo $time
@@ -11,7 +10,29 @@ cpu() {
     echo $cpu
 }
 
-while : ; do
-    xsetroot -name "| CPU: $(cpu)% | $(datetime)"
+check_status() {
+    device_types="$(nmcli device show | grep TYPE | cut -d ':' -f 2 | sed 's/  //g')"
+
+    devices="$(nmcli device show | grep DEVICE | cut -d ':' -f 2 | sed 's/ //g')"
+
+    state="$(nmcli device show | grep STATE | cut -d ':' -f 2 | sed 's/  //g' | cut -d ' ' -f 1)"
+    ips="$(nmcli device show | grep IP4.ADDRESS | cut -d ':' -f 2 | sed 's/ //g' | cut -d '/' -f 1)"
+
+    list_devices_type=(${device_types//\\n/ })
+    list_devices=(${devices//\\n/ })
+    list_state=(${state//\\n/ })
+    list_ips=(${ips//\\n/ })
+    for (( i=0; i<${#list_devices_type[@]}; i++ ))
+    do
+        if [[ ${list_state[$i]} = "100" && ${list_devices[$i]} != "lo" ]]; then
+            echo "Connected: ${list_devices[$i]} | IP: ${list_ips[$i]}"
+        elif [[ ${list_state[$i]} = "30" && ${list_devices[$i]} != "lo" ]]; then
+            echo "Not Connected"
+        fi
+    done
+}
+
+while : ; do 
+    xsetroot -name "| $(check_status) | CPU: $(cpu)% | $(datetime)"
     sleep 1
 done

@@ -1,0 +1,54 @@
+#!/bin/bash
+
+device_types="$(nmcli device show | grep TYPE | cut -d ':' -f 2 | sed 's/  //g')"
+
+devices="$(nmcli device show | grep DEVICE | cut -d ':' -f 2 | sed 's/ //g')"
+
+state="$(nmcli device show | grep STATE | cut -d ':' -f 2 | sed 's/  //g' | cut -d ' ' -f 1)"
+ips="$(nmcli device show | grep IP4.ADDRESS | cut -d ':' -f 2 | sed 's/ //g' | cut -d '/' -f 1)"
+
+list_devices_type=(${device_types//\\n/ })
+list_devices=(${devices//\\n/ })
+list_state=(${state//\\n/ })
+list_ips=(${ips//\\n/ })
+password="xyz"
+
+network_connect() {
+    local device_name=$1
+    local device_type=$2
+    case $device_type in
+        "ethernet")
+            nmcli device connect $device_name >> /dev/null
+            ;;
+        "wifi")
+            nmcli device connect $device_name password $password >> /dev/null
+            ;;
+        *)
+            ;;
+    esac
+}
+
+check_status_and_connect() {
+    for (( i=0; i<${#list_devices_type[@]}; i++ ))
+    do
+        case ${list_devices_type[$i]} in
+            "ethernet")
+                if [ ${list_state[$i]} = "30" ]; then
+                    network_connect ${list_devices[$i]} ethernet
+                fi
+                ;;
+            "wifi")
+                if [ ${list_state[$i]} = "30" ]; then
+                    network_connect ${list_devices[$i]} wifi
+                fi
+                ;;
+            *)
+                ;;
+        esac
+    done
+}
+
+
+
+check_status_and_connect
+
