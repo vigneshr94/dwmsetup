@@ -24,8 +24,8 @@ static const char *const autostart[] = {
 	"compositer", NULL,
 	"fehbg", NULL,
 	"netsetup", NULL,
-	"dwm-bar", NULL,
-	NULL /* terminate */
+    "dwmblocks", NULL,
+    NULL /* terminate */
 };
 
 /* tagging */
@@ -40,6 +40,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "firefox",  NULL,       NULL,       2,            0,           -1 },
+	{ "st",       NULL,       NULL,       0,            1,           -1 },
 	{ "Alacritty",NULL,       NULL,       1,            0,           -1 },
 	{ "Thunar",   NULL,       NULL,       1 << 2,       1,           -1 },
 };
